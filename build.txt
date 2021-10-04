@@ -1,0 +1,8 @@
+displayName = Music Box Accessory Slot
+author = Solxan
+version = 1.0.0
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, Old\*
+includePDB = true
