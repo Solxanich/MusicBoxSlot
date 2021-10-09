@@ -31,11 +31,27 @@ namespace MusicBoxSlot
 					break;
 			}
 		}
-		
-		public override bool ModifyDefaultSwapSlot(Item item, int accSlotToSwapTo)
+
+        public override void ApplyEquipEffects()
+        {
+			Player.ApplyEquipVanity(FunctionalItem);
+			Player.ApplyEquipVanity(VanityItem);
+        }
+
+        public override bool CanAcceptItem(Item checkItem, AccessorySlotType context)
+        {
+			return CheckIfMusicBox(checkItem);
+        }
+
+        public override bool ModifyDefaultSwapSlot(Item item, int accSlotToSwapTo)
 		{
+			return CheckIfMusicBox(item);
+		}
+
+		internal bool CheckIfMusicBox(Item item)
+        {
 			bool result = false;
-			
+
 			var cache1 = Main.musicBox2;
 			Main.musicBox2 = -1;
 
