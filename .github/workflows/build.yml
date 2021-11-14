@@ -1,0 +1,55 @@
+name: Build MusicSlot Mod
+
+# Controls when the action will run. 
+on:
+  # This workflow runs when a push to 1.4 or main branches happens
+  push:
+    branches: [1.4, main]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  setup:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+    # Make sure only to on push events. Can add other specific checks here
+    if: github.event_name == 'push'
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out base branch
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      # GitHub runners may have outdated .NET versions.
+      - name: Install .NET SDKs
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+
+      # Runs a set of commands using the runners shell
+      - name: Build script
+        shell: bash
+        run: |
+          echo Installing XNA
+          curl -s -L https://github.com/JavidPack/tModLoaderPublishIntegration/raw/master/xnafx40_redist.msi -O
+          msiexec //i xnafx40_redist.msi //quiet
+          echo XNA Installed
+          
+          echo ::group::Running PublishWorkshopItem.bat
+          CIBuildTool/PublishWorkshopItem.bat "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" "changenote"
+          
+          mkdir -p artifacts/Release
+          cp -r CIBuildTool/. artifacts/Release
+          echo ::endgroup::
+          
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Debug Build
+          path: |
+            ./artifacts/Release/
+            
+ 
