@@ -39,7 +39,7 @@ jobs:
           echo XNA Installed
           
           echo Installing SteamClient
-          cp -r CIBuildTool/Steam $PROGRAMFILES
+          cp -r CIBuildTool/Steam/. "C:/Program Files (x86)/Steam"
           
           echo ::group::Running PublishWorkshopItem.bat
           CIBuildTool/PublishWorkshopItem.bat "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" "changenote"
