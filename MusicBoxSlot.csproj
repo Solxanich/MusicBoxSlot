@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../tModLoader.targets" />
-  <Import Project="CIBuildTool/Mod Sources/tModLoader.targets" />
+  <Import Project="../tModLoader.targets" Condition="Exists('../tModLoader.targets')"/>
+  <Import Project="CIBuildTool/Mod Sources/tModLoader.targets" Condition="Exists('CIBuildTool/Mod Sources/tModLoader.targets')"/>
   <PropertyGroup>
     <AssemblyName>MusicBoxSlot</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
