@@ -33,18 +33,33 @@ jobs:
       - name: Build script
         shell: bash
         run: |
-          echo Installing XNA
-          curl -s -L https://github.com/JavidPack/tModLoaderPublishIntegration/raw/master/xnafx40_redist.msi -O
-          msiexec //i xnafx40_redist.msi //quiet
-          echo XNA Installed
+          echo ::group::Installing Steam
+          ${{ github.workspace }}/CIBuildTool/Steam/SteamSetup.exe /S
+          echo ::endgroup::
           
-          echo Installing SteamClient
-          cp -r CIBuildTool/Steam/. "C:/Program Files (x86)/Steam"
+          changeNotes=help
           
-          echo ::group::Running PublishWorkshopItem.bat
-          CIBuildTool/PublishWorkshopItem.bat "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" "changenote"
+          ciToolDir=${{ github.workspace }}/CIBuildTool
+          cd $ciToolDir
           
-          rm CIBuildTool/tMod
+          echo ::group::Fetching tModLoader
+          @echo off
+          #steamcmd +login "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
+          @echo on
+          echo ::endgroup::
+          
+          echo ::group::Building Mod         
+          cd $ciToolDir/tMod
+          dotnet tmodloader.dll -server -build ${{ github.workspace }} -tmlsavedirectory $ciToolDir -ciprep $changeNotes
+          cd ..
+          echo ::endgroup::
+          
+          echo ::group::Publishing Mod
+          @echo off
+          #steamcmd +login %username% +workshop_build_item publish.vdf +quit
+          @echo on
+          
+          rm -r CIBuildTool/tMod
           
           mkdir -p artifacts/Release
           cp -r CIBuildTool/. artifacts/Release
