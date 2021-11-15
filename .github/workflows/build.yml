@@ -38,7 +38,7 @@ jobs:
           
           echo ::group::Fetching tModLoader
           echo off
-          steamcmd +login "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
+          steamcmd.exe +login "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
           echo on
           echo ::endgroup::
           
@@ -54,7 +54,7 @@ jobs:
           mkdir -p artifacts/Release
           cp -r CIBuildTool/. artifacts/Release
           
-          #steamcmd +login %username% +workshop_build_item publish.vdf +quit
+          #steamcmd.exe +login %username% +workshop_build_item publish.vdf +quit
           echo ::endgroup::
           
           echo ::group::Cleaning
