@@ -56,14 +56,12 @@ jobs:
           echo ::endgroup::
           
           echo ::group::Publishing Mod
-          echo off
-          #steamcmd +login %username% +workshop_build_item publish.vdf +quit
-          echo on
-          
           rm -r -f CIBuildTool/tMod
+          mkdir -p artifacts/Release
+          cp -r CIBuildTool/. artifacts/Release
           
-          mkdir -p "${{ github.workspace }}"/artifacts/Release
-          cp -r "${{ github.workspace }}"/CIBuildTool/. "${{ github.workspace }}"/artifacts/Release
+          #steamcmd +login %username% +workshop_build_item publish.vdf +quit
+          
           echo ::endgroup::
           
       - name: Upload Build Artifact
