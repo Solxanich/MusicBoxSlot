@@ -30,12 +30,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build script
         shell: bash
-        run: |
-          echo ::group::Installing Steam
-          echo Attempting Install of Steam
-          #"${{ github.workspace }}"/CIBuildTool/Steam/SteamSetup.exe /S
-          echo ::endgroup::
-          
+        run: |          
           changeNotes=help
           
           ciToolDir="${{ github.workspace }}"/CIBuildTool
@@ -43,7 +38,7 @@ jobs:
           
           echo ::group::Fetching tModLoader
           echo off
-          #steamcmd +login "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
+          steamcmd +login "${{ SteamPublishSolxan.STEAM_USERNAME }}" "${{ SteamPublishSolxan.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
           echo on
           echo ::endgroup::
           
@@ -60,7 +55,10 @@ jobs:
           cp -r CIBuildTool/. artifacts/Release
           
           #steamcmd +login %username% +workshop_build_item publish.vdf +quit
+          echo ::endgroup::
           
+          echo ::group::Cleaning
+          rm -r -f "${{ github.workspace }}"
           echo ::endgroup::
           
       - name: Upload Build Artifact
