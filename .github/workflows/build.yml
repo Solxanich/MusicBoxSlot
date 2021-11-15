@@ -34,7 +34,8 @@ jobs:
         shell: bash
         run: |
           echo ::group::Installing Steam
-          "${{ github.workspace }}"/CIBuildTool/Steam/SteamSetup.exe /S
+          echo Attempting Install of Steam
+          #"${{ github.workspace }}"/CIBuildTool/Steam/SteamSetup.exe /S
           echo ::endgroup::
           
           changeNotes=help
