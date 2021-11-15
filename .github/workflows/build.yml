@@ -40,7 +40,7 @@ jobs:
           
           changeNotes=help
           
-          ciToolDir=${{ github.workspace }}/CIBuildTool
+          ciToolDir="${{ github.workspace }}"/CIBuildTool
           cd $ciToolDir
           
           echo ::group::Fetching tModLoader
@@ -51,7 +51,7 @@ jobs:
           
           echo ::group::Building Mod         
           cd $ciToolDir/tMod
-          dotnet tmodloader.dll -server -build ${{ github.workspace }} -tmlsavedirectory $ciToolDir -ciprep $changeNotes
+          dotnet tmodloader.dll -server -build "${{ github.workspace }}" -tmlsavedirectory $ciToolDir -ciprep $changeNotes
           cd ..
           echo ::endgroup::
           
