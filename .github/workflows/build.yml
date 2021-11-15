@@ -60,7 +60,7 @@ jobs:
           #steamcmd +login %username% +workshop_build_item publish.vdf +quit
           echo on
           
-          rm -r CIBuildTool/tMod
+          rm -r -f CIBuildTool/tMod
           
           mkdir -p artifacts/Release
           cp -r CIBuildTool/. artifacts/Release
