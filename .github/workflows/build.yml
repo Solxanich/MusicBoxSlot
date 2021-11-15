@@ -53,6 +53,7 @@ jobs:
           cd $ciToolDir/tMod
           dotnet tmodloader.dll -server -build "${{ github.workspace }}" -tmlsavedirectory $ciToolDir -ciprep $changeNotes
           cd ..
+          cd ..
           echo ::endgroup::
           
           echo ::group::Publishing Mod
