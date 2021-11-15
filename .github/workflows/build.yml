@@ -38,7 +38,7 @@ jobs:
           
           echo ::group::Fetching tModLoader
           echo off
-          steamcmd +login "${{ SteamPublishSolxan.STEAM_USERNAME }}" "${{ SteamPublishSolxan.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
+          steamcmd +login "${{ secrets.STEAM_USERNAME }}" "${{ secrets.STEAM_PASSWORD }}" +force_install_dir tMod "+app_update 1281930 -validate -beta public-1.4-alpha" +quit 
           echo on
           echo ::endgroup::
           
