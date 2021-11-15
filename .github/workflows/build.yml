@@ -62,7 +62,7 @@ jobs:
           
           rm -r -f CIBuildTool/tMod
           
-          mkdir -p "${{ github.workspace }}"artifacts/Release
+          mkdir -p "${{ github.workspace }}"/artifacts/Release
           cp -r "${{ github.workspace }}"/CIBuildTool/. "${{ github.workspace }}"/artifacts/Release
           echo ::endgroup::
           
